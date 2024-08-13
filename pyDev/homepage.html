@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js" integrity="test"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="test1"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var socket = io("localhost:5000")
+            socket.on("connect",function() {
+
+                console.log("connected");
+
+            });
+
+            socket.on("message",function(data) {
+                console.log("message sent")
+                $("#message_list").append($("<p>").text(data))
+
+
+            });
+
+            $("#button").on("click",function() {
+
+                console.log("button clicked")
+                socket.send($("#user").val() + ": " + $("#message").val());
+                $("#message").val("");
+
+            });
+
+
+        })
+
+    </script>
+    <div id="message_list">
+
+
+
+    </div>
+    <input type="text" id="user" placeholder="Login: " required>
+    <input type="text" id="message" placeholder="Message: " required>
+    <button id="btn">Send</button>
+</body>
+</html>
